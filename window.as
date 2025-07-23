@@ -211,10 +211,10 @@ class Window {
                     startnew(Game::PlayMap, @map);
                 }
                 UI::SameLine();
-                UI::Text(ColoredString(map.Name));
+                UI::Text(Text::OpenplanetFormatCodes(map.Name));
                 if(UI::IsItemHovered()) {
                     UI::BeginTooltip();
-                    UI::Text(StripFormatCodes(map.Name));
+                    UI::Text(Text::StripFormatCodes(map.Name));
                     auto img = Util::Images::CachedFromURL(map.Img);
                     if(img.m_texture !is null) {
                         UI::Image(img.m_texture, vec2(256, 256));
