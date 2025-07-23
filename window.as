@@ -12,7 +12,7 @@ class Window {
     private int _leaderboardOffset = 0;
     private int _leaderboardLimit = 40;
     private bool _refreshing = false;
-    private Meta::PluginCoroutine@ _refreshCr = null;
+    private awaitable@ _refreshCr = null;
     private bool _isOpen = false;
 
     // UI data cache
@@ -35,7 +35,7 @@ class Window {
     }
 
     void Update(float dt) {
-        if(_refreshCr != null && _refreshCr.IsRunning() == false) {
+        if(_refreshCr !is null && _refreshCr.IsRunning() == false) {
             _refreshing = false;
             @_refreshCr = null;
         }
