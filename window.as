@@ -79,8 +79,8 @@ class Window {
             }
 
             UI::EndTabBar();
-            UI::End();
         }
+        UI::End();
 
         if(!open) {
             _isOpen = false;
