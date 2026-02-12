@@ -1,20 +1,24 @@
-bool permissionPlayMaps = false;
-Window _window;
+const bool permissionPlayMaps = Permissions::PlayLocalMap();
+Window@ _window;
 
 void Main() {
-    permissionPlayMaps = Permissions::PlayLocalMap();
+    @_window = Window();
     Async::Await(Nadeo::Api::Authenticate);
     TMRank::Service::LoadAllMapPacks();
     
 }
 
 void Update(float dt) {
-    _window.Update(dt);
+    if (_window !is null) {
+        _window.Update(dt);
+    }
 }
 
 void RenderInterface() {
     if(!UI::IsGameUIVisible()) return;
-    _window.Render();
+    if (_window !is null) {
+        _window.Render();
+    }
 }
 
 void RenderMenu() {
