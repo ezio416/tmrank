@@ -206,10 +206,12 @@ class Window {
 
                 UI::TableNextRow();
                 UI::TableNextColumn();
+                UI::BeginDisabled(!permissionPlayMaps);
                 if(UI::Button(Icons::Play + "##" + i)) {
                     _isOpen = false;
                     startnew(Game::PlayMap, @map);
                 }
+                UI::EndDisabled();
                 UI::SameLine();
                 UI::Text(Text::OpenplanetFormatCodes(map.Name));
                 if(UI::IsItemHovered()) {

@@ -2,7 +2,7 @@ namespace Game {
 
     void PlayMap(ref@ mapRef) {
         auto map = cast<TMRank::Model::Map@>(mapRef);
-        if (Permissions::PlayLocalMap()) {
+        if (permissionPlayMaps) {
             string url = Nadeo::Api::GetMapDownloadUrl(map.UID);
             CTrackMania@ app = cast<CTrackMania>(GetApp());
             ReturnToMenu(true);

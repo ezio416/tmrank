@@ -1,4 +1,4 @@
-
+const bool permissionPlayMaps = Permissions::PlayLocalMap();
 Window _window;
 
 void Main() {
