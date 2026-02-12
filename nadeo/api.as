@@ -21,7 +21,7 @@ namespace Nadeo {
             while (!NadeoServices::IsAuthenticated("NadeoLiveServices")) {
                 yield();
             }
-            baseUrlLive = NadeoServices::BaseURL();
+            baseUrlLive = NadeoServices::BaseURLLive();
             baseUrlCore = "https://prod.trackmania.core.nadeo.online";
         }
 
