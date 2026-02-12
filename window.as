@@ -65,7 +65,7 @@ class Window {
             }
 
             // Draw each map pack tab
-            for(int i = 0; i < mapPacks.Length; i++) {
+            for(uint i = 0; i < mapPacks.Length; i++) {
                 auto mapPack = mapPacks[i];
                 bool tabOpen = UI::BeginTabItem(mapPack.TypeName);
                 if(UI::IsItemClicked()) {
@@ -176,7 +176,7 @@ class Window {
             }
             UI::SameLine();
             if(UI::Button(Icons::ArrowRight)) {
-                if(_mapOffset + _mapLimit < maps.Length) {
+                if(_mapOffset + _mapLimit < int(maps.Length)) {
                     _mapOffset += _mapLimit;
                 }
             }            
@@ -198,11 +198,11 @@ class Window {
             
             UI::TableHeadersRow();
 
-            auto maps = mapPack.GetMaps();
+            auto maps2 = mapPack.GetMaps();
 
-            for(uint i = _mapOffset; i < Math::Min(_mapOffset + _mapLimit, maps.Length); i++) {
+            for(int i = _mapOffset; i < Math::Min(_mapOffset + _mapLimit, maps2.Length); i++) {
 
-                auto map = maps[i];
+                auto map = maps2[i];
 
                 UI::TableNextRow();
                 UI::TableNextColumn();
@@ -216,13 +216,13 @@ class Window {
                     UI::BeginTooltip();
                     UI::Text(StripFormatCodes(map.Name));
                     auto img = Util::Images::CachedFromURL(map.Img);
-                    if(img.m_texture != null) {
+                    if(img.m_texture !is null) {
                         UI::Image(img.m_texture, vec2(256, 256));
                     }
                     UI::EndTooltip();
                 }
         
-                if(map.UserStats != null && map.UserStats.PB > 0) {
+                if(map.UserStats !is null && map.UserStats.PB > 0) {
                     UI::TableNextColumn();
                     UI::Text(Time::Format(map.UserStats.PB));
                 } else {
@@ -245,7 +245,7 @@ class Window {
                     "AT: " + Time::Format(map.AuthorTime),
                 };
 
-                for(int j = 0; j < pointStrings.Length; j++) {
+                for(uint j = 0; j < pointStrings.Length; j++) {
                     UI::TableNextColumn();
                     UI::Text(_medalIcons[j]);
                     if(UI::IsItemHovered()) {
@@ -258,7 +258,7 @@ class Window {
                 }
 
                 UI::TableNextColumn();
-                if(map.UserStats != null && map.UserStats.Score > 0) {
+                if(map.UserStats !is null && map.UserStats.Score > 0) {
                     UI::Text(map.UserStats.Score + "");
                 }
 
@@ -269,9 +269,9 @@ class Window {
     }
 
     private string _DoPointString(int points, TMRank::Model::UserMapStats@ userStats, uint pointTime) {
-        if(userStats != null && userStats.PB > 0) {            
+        if(userStats !is null && userStats.PB > 0) {            
             string completeColor = _colNotAchieved;
-            if(userStats.PB <= pointTime) {
+            if(userStats.PB <= int(pointTime)) {
                 completeColor = _colAchieved;
             }
             return completeColor + points;
@@ -331,7 +331,7 @@ class Window {
 
     private void _DrawUserStats(TMRank::Model::MapPack@ mapPack) {
         auto packStats = mapPack.GetUserPackStats();
-        if(packStats != null) {
+        if(packStats !is null) {
             UI::Text(packStats.Username);
             UI::Separator();
             UI::Text("Rank: " + packStats.Rank);

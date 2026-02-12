@@ -41,9 +41,9 @@ namespace TMRank {
             }
 
             void UpdateUserStats(TMRank::Model::UserMapStats@[] userStats) {
-                for(int i = 0; i < userStats.Length; i++) {
+                for(uint i = 0; i < userStats.Length; i++) {
                     TMRank::Model::UserMapStats@ userStat = userStats[i];
-                    for(int j = 0; j < _maps.Length; j++) {
+                    for(uint j = 0; j < _maps.Length; j++) {
                         auto map = _maps[j];
                         if(map.UID == userStat.MapUid) {
                             @map.UserStats = userStat;

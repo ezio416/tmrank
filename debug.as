@@ -3,14 +3,14 @@
 namespace Logger {
 
     // Print to console when in dev mode
-    void DevMessage(string message) {
+    void DevMessage(const string&in message) {
         if(Meta::IsDeveloperMode()) {
             print(message);
         }
     }
 
     // Raise a fatal error
-    void Error(string message) {
+    void Error(const string&in message) {
         throw(message);
     }
 }

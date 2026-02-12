@@ -13,7 +13,7 @@ namespace TMRank {
             Json::Value res = Http::GetAsync(EP_MAP_PACK_TYPES);
 
             TMRank::Model::MapPack@[] result = {};
-            for(int i = 0; i < res.GetKeys().Length; i++) {
+            for(uint i = 0; i < res.GetKeys().Length; i++) {
                 result.InsertLast(@TMRank::Model::MapPack(res[res.GetKeys()[i]]));
             }
             return result;
@@ -22,7 +22,7 @@ namespace TMRank {
         TMRank::Model::Map@[] GetMapsForPack(TMRank::Model::MapPack@ mapPack) {
             Json::Value res = Http::GetAsync(EP_MAP_LIST.Replace("{type_id}", "" + mapPack.TypeID));
             TMRank::Model::Map@[] result = {};
-            for(int i = 0; i < res.GetKeys().Length; i++) {
+            for(uint i = 0; i < res.GetKeys().Length; i++) {
                 result.InsertLast(TMRank::Model::Map(res[res.GetKeys()[i]]));
             }
             return result;
@@ -37,7 +37,7 @@ namespace TMRank {
             Json::Value res = Http::GetAsync(url);
 
             TMRank::Model::Driver@[] result = array<TMRank::Model::Driver@>(res.GetKeys().Length);
-            for(int i = 0; i < res.GetKeys().Length; i++) {
+            for(uint i = 0; i < res.GetKeys().Length; i++) {
                 auto driver = TMRank::Model::Driver(res[res.GetKeys()[i]]);
                 @result[driver.rank-1] = driver;
             }
@@ -50,7 +50,7 @@ namespace TMRank {
             url = url.Replace("{nadeo_user_id}", userId);
             Json::Value res = Http::GetAsync(url);
             TMRank::Model::UserMapStats@[] result = {};
-            for(int i = 0; i < res.Length; i++) {
+            for(uint i = 0; i < res.Length; i++) {
                 result.InsertLast(TMRank::Model::UserMapStats(res[res.GetKeys()[i]], res.GetKeys()[i]));
             }
             return result;
@@ -62,7 +62,7 @@ namespace TMRank {
             Json::Value res = Http::GetAsync(url);
             Json::Value types = res["types"];
             TMRank::Model::UserPackStats@[] result = {};
-            for(int i = 0; i < types.GetKeys().Length; i++) {
+            for(uint i = 0; i < types.GetKeys().Length; i++) {
                 Json::Value type = types[types.GetKeys()[i]];
                 if(type.GetType() == Json::Type::Object) {
                     result.InsertLast(TMRank::Model::UserPackStats(type, res["driver_name"]));

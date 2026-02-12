@@ -8,9 +8,9 @@ namespace TMRank {
             string userId = NadeoServices::GetAccountID();
             auto userPackStats = TMRank::Api::GetUserPackStats(userId);
 
-            for(int i = 0; i < userPackStats.Length; i++) {
+            for(uint i = 0; i < userPackStats.Length; i++) {
                 auto userPackStat = userPackStats[i];
-                for(int j = 0; j < mapPacks.Length; j++) {
+                for(uint j = 0; j < mapPacks.Length; j++) {
                     auto mapPack = mapPacks[j];
                     if(userPackStat.TypeID == mapPack.TypeID) {
                         mapPack.SetUserPackStats(userPackStat);
@@ -18,7 +18,7 @@ namespace TMRank {
                 }
             }
 
-            for(int i = 0; i < mapPacks.Length; i++) {
+            for(uint i = 0; i < mapPacks.Length; i++) {
                 TMRank::Model::MapPack@ mapPack = mapPacks[i];
                 mapPack.SetMaps(TMRank::Api::GetMapsForPack(mapPack));
                 mapPack.UpdateUserStats(TMRank::Api::GetUserMapStats(mapPack, userId));

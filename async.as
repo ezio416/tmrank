@@ -20,7 +20,7 @@ namespace Async {
     }
 
     // Yield until coroutine is complete
-    void Await(CoroutineFuncUserdataString@ routine, string userData) {
+    void Await(CoroutineFuncUserdataString@ routine, const string&in userData) {
         auto cr = startnew(routine, userData);
         while(cr.IsRunning()) {
             yield();
