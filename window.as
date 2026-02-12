@@ -1,3 +1,4 @@
+[Setting hidden] bool S_Open = false;
 
 class Window {
 
@@ -13,7 +14,6 @@ class Window {
     private int _leaderboardLimit = 40;
     private bool _refreshing = false;
     private awaitable@ _refreshCr = null;
-    private bool _isOpen = false;
 
     // UI data cache
     private string _tabTypeCache = "";
@@ -41,17 +41,12 @@ class Window {
         }
     }
 
-    void Show() {
-        _isOpen = true;
-    }
-
     void Render() {
-        if(!_isOpen) return;
+        if(!S_Open) return;
         
         UI::PushStyleColor(UI::Col::WindowBg, vec4(0, 0, 0, 0.991));
 
-        bool open = false;
-        if(UI::Begin("TMRank", open)) {
+        if(UI::Begin("TMRank", S_Open, UI::GetDefaultWindowFlags() | UI::WindowFlags::NoFocusOnAppearing)) {
             
             auto mapPacks = TMRank::Cache::GetMapPacks();
             
@@ -81,10 +76,6 @@ class Window {
             UI::EndTabBar();
         }
         UI::End();
-
-        if(!open) {
-            _isOpen = false;
-        }
 
         UI::PopStyleColor();
     }    
@@ -208,7 +199,7 @@ class Window {
                 UI::TableNextColumn();
                 UI::BeginDisabled(!permissionPlayMaps);
                 if(UI::Button(Icons::Play + "##" + i)) {
-                    _isOpen = false;
+                    S_Open = false;
                     startnew(Game::PlayMap, @map);
                 }
                 UI::EndDisabled();

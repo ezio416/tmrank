@@ -19,7 +19,7 @@ void RenderInterface() {
 
 void RenderMenu() {
     string menuItemText = Colors::MEDAL_GOLD + Icons::Kenney::Podium + Colors::WHITE + " TMRank";
-    if(UI::MenuItem(menuItemText, "")) {
-       _window.Show();
+    if(UI::MenuItem(menuItemText, "", S_Open)) {
+       S_Open = !S_Open;
     }
 }
