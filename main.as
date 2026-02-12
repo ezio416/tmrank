@@ -1,8 +1,8 @@
-const bool permissionPlayMaps = Permissions::PlayLocalMap();
+bool permissionPlayMaps = false;
 Window _window;
 
 void Main() {
-    _window = Window();
+    permissionPlayMaps = Permissions::PlayLocalMap();
     Async::Await(Nadeo::Api::Authenticate);
     TMRank::Service::LoadAllMapPacks();
     
