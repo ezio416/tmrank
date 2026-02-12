@@ -215,9 +215,9 @@ class Window {
                 if(UI::IsItemHovered()) {
                     UI::BeginTooltip();
                     UI::Text(Text::StripFormatCodes(map.Name));
-                    auto img = Util::Images::CachedFromURL(map.Img);
-                    if(img.m_texture !is null) {
-                        UI::Image(img.m_texture, vec2(256, 256));
+                    auto tex = Util::Images::Get(map.Img);
+                    if(tex !is null) {
+                        UI::Image(tex, vec2(256, 256));
                     }
                     UI::EndTooltip();
                 }

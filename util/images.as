@@ -1,48 +1,40 @@
 namespace Util {
     namespace Images {
+        dictionary cache;
+        bool downloading = false;
 
-        // Code inspired (almost copied) from TMX plugin
-        // https://github.com/GreepTheSheep/openplanet-maniaexchange-menu/blob/main/src/Utils/CachedImage.as
-
-        class CachedImage
-        {
-            string m_url;
-            UI::Texture@ m_texture;
-            int m_responseCode;
-            bool m_error = false;
-
-            void DownloadFromURLAsync()
-            {
-                auto req = Http::GetAsyncRaw(m_url);
-                @m_texture = UI::LoadTexture(req.Buffer());
-                if (m_texture.GetSize().x == 0) {
-                    @m_texture = null;
-                } else {
-                    m_error = true;
-                }
+        void DownloadAsync(const string&in url) {
+            if (false
+                or downloading
+                or cache.Exists(url)
+            ) {
+                return;
             }
+
+            downloading = true;
+
+            trace("downloading image: " + url);
+
+            Net::HttpRequest@ req = Http::GetAsyncRaw(url);
+            UI::Texture@ tex = UI::LoadTexture(req.Buffer());
+            if (true
+                and tex !is null
+                and tex.GetSize().x > 0
+            ) {
+                cache.Set(url, @tex);
+            }
+
+            downloading = false;
         }
 
-        dictionary g_cachedImages;
-
-        CachedImage@ FindExisting(const string &in url)
-        {
-            CachedImage@ ret = null;
-            g_cachedImages.Get(url, @ret);
-            return ret;
-        }
-
-        CachedImage@ CachedFromURL(const string &in url)
-        {
-            auto existing = FindExisting(url);
-            if (existing !is null) {
-                return existing;
+        UI::Texture@ Get(const string&in url) {
+            if (cache.Exists(url)) {
+                return cast<UI::Texture>(cache[url]);
             }
-            auto ret = CachedImage();
-            ret.m_url = url;
-            g_cachedImages.Set(url, @ret);
-            startnew(CoroutineFunc(ret.DownloadFromURLAsync));
-            return ret;
+
+            startnew(DownloadAsync, url);
+
+            return null;
         }
     }
 }
